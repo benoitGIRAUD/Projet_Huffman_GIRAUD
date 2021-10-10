@@ -162,21 +162,25 @@ int main(void)
 
 
 
-
+    printf ("|__________|______________|______________|\n\r"); //première ligne
+    printf ("|Index[]   |  Caractere   |  Ocuurence   |\n\r"); //affichage titre collone
 	//_________ Affichage occurence _________________
 	   for (int i = 0 ; i < MAX_ARRAY ; i++) // on parcourt le tab
 		    {
 		   if (tabCaractere[i] != 0) { //si caractère present: pour pas afficher ailleurs
-		        printf (" |----------------------------------------------------|");
-		        printf (" \n ");
-		    	printf (" Index =   [%d]  ", i); //j'affiche l'index
-		    	printf (" Caractère =  %c  ", i); //j'affiche le caractère correspondant
-		        printf( " Occurences %d\n  ", tabCaractere[i]);  //j'affiche la valeur d'occurence du caractère correspodnant
+
+		    	printf ("   [%d]  ", i); //j'affiche l'index
+		    	printf ("  | "); // séparation collone
+		    	printf ("     '%c'  ", i); //j'affiche le caractère correspondant
+		    	printf ("   | "); // séparation collone
+		        printf( "          %d", tabCaractere[i]);  //j'affiche la valeur d'occurence du caractère correspodnant
 		        //HAL_Delay(DELAY_UART);
+		        printf ("  |\n\r"); // séparation collone
+
 		   }
 
 		    }
-
+	   printf ("|__________|______________|______________|\n\r");
 
 /*
 
