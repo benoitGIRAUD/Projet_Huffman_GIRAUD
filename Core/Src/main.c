@@ -31,12 +31,18 @@
 
 /* USER CODE END PTD */
 
+
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 /* USER CODE END PD */
 #define TAILLE_MAX_COMPRESS 10
 #define DELAY_UART 50
 #define MAX_ARRAY 256
+
+	uint8_t texteCompress[TAILLE_MAX_COMPRESS];
+	uint32_t tabCaractere[256]={0}; //tableau
+	uint32_t nbrCaractereTotal =0;
+	struct noeud* arbreHuffman[256];
 
 /* Private macro -------------------------------------------------------------*/
 
@@ -65,6 +71,7 @@ static void MX_USART2_UART_Init(void);
 void myPrintf(uint8_t *text);
 void occurence ( uint8_t* chaine, uint32_t tab[256]);
 void creerFeuille (struct noeud * arbre[256], uint32_t tab[256]);
+void affichageUART_Occurence(void);
 
 /* USER CODE BEGIN PFP */
 
@@ -108,6 +115,58 @@ void occurence ( uint8_t* chaine, uint32_t tab[256]) {
 	    		    }
 }
 
+void affichageUART_Occurence(void){
+	//printf ("|__________|______________|______________|\n\r"); //première ligne
+	    printf ("|Index[]   |  Caractere   |  Ocuurence   |\n\r"); //affichage titre collone
+		//_________ Affichage occurence _________________
+		   for (int i = 0 ; i < MAX_ARRAY ; i++) // on parcourt le tab
+			    {
+			   if (tabCaractere[i] != 0) { //si caractère present: pour pas afficher ailleurs
+
+			    	printf ("   [%d]  ", i); //j'affiche l'index
+			    	printf ("  | "); // séparation collone
+			    	printf ("     '%c'  ", i); //j'affiche le caractère correspondant
+			    	printf ("   | "); // séparation collone
+			        printf( "          %d", tabCaractere[i]);  //j'affiche la valeur d'occurence du caractère correspodnant
+			        //HAL_Delay(DELAY_UART);
+			        printf ("  |\n\r"); // séparation collone
+
+			   }
+
+			    }
+		   printf ("|__________|______________|______________|\n\r");
+
+}
+
+void creerFeuille (struct noeud * arbre[256], uint32_t tab[256]){
+
+
+	  // Caractère present: jvai créer une structure pour chaque char trouvé
+	    for (int j = 0 ; j < MAX_ARRAY ; j++) { 	//parcourt tabCactere
+
+		    	if (tabCaractere[j]>0) { //si caractère present
+
+		    		struct noeud *nouveauNoeud; //création un pointeur de type noeud: carnet d'@
+		    		nouveauNoeud = (struct noeud*) malloc(sizeof(struct noeud)); //j'aloue de la mémoire
+
+		    			// On remplit la structure: l'arbreHuffman
+		    		nouveauNoeud->c=j; //caractère initiale: c'est la valeur de j
+		    		nouveauNoeud->occurence=tabCaractere[j]; //valeur tab = nbr occurence
+		    		nouveauNoeud->code=0;
+		    		nouveauNoeud->TailleCode=0;
+		    		nouveauNoeud->droite=NULL;
+		    		nouveauNoeud->gauche=NULL;
+
+		    		        //On remplit ArbreHufman avec l'@ de NouveauNoeud
+
+		    		arbreHuffman[0] = nouveauNoeud; // à l'index 0 on a l'@ de la structure noeud de 'a'
+		    		j++;
+
+				}
+
+	    }
+
+}
 
 /**
   * @brief  The application entry point.
@@ -115,12 +174,10 @@ void occurence ( uint8_t* chaine, uint32_t tab[256]) {
   */
 int main(void)
 {
-	uint8_t texteCompress[TAILLE_MAX_COMPRESS];
-	uint32_t tabCaractere[256]={0}; //tableau
-	uint32_t nbrCaractereTotal =0;
+
 
 	uint32_t nbrCaractereDifferent = 0;
-	struct noeud* arbreHuffman[256];
+
 
 
 	int var=0;
@@ -158,41 +215,19 @@ int main(void)
 	struct noeud* memoireAllouee = NULL; // On crée un pointeur sur struct
 
 	occurence(texte, tabCaractere); //calcul du nombre d'occurence de caractères dans texte
+	affichageUART_Occurence(); //affichage UART
 
-
-
-
-    printf ("|__________|______________|______________|\n\r"); //première ligne
-    printf ("|Index[]   |  Caractere   |  Ocuurence   |\n\r"); //affichage titre collone
-	//_________ Affichage occurence _________________
-	   for (int i = 0 ; i < MAX_ARRAY ; i++) // on parcourt le tab
-		    {
-		   if (tabCaractere[i] != 0) { //si caractère present: pour pas afficher ailleurs
-
-		    	printf ("   [%d]  ", i); //j'affiche l'index
-		    	printf ("  | "); // séparation collone
-		    	printf ("     '%c'  ", i); //j'affiche le caractère correspondant
-		    	printf ("   | "); // séparation collone
-		        printf( "          %d", tabCaractere[i]);  //j'affiche la valeur d'occurence du caractère correspodnant
-		        //HAL_Delay(DELAY_UART);
-		        printf ("  |\n\r"); // séparation collone
-
-		   }
-
-		    }
-	   printf ("|__________|______________|______________|\n\r");
-
-/*
-
+	int e =0; //on commence à 0 --> attention a faire a lexterieiur de la boucle
+	//test carnet d'adresse
 	  // Caractère present: jvai créer une structure pour chaque char trouvé
 	    for (int j = 0 ; j < MAX_ARRAY ; j++) { 	//parcourt tabCactere
 
 		    	if (tabCaractere[j]>0) { //si caractère present
 
-		    		struct noeud *nouveauNoeud; //création var nouveau noeud de type noeud
+		    		struct noeud *nouveauNoeud; //création un pointeur de type noeud: carnet d'@
 		    		nouveauNoeud = (struct noeud*) malloc(sizeof(struct noeud)); //j'aloue de la mémoire
 
-		    			// On remplit la structure
+		    			// On remplit la structure: l'arbreHuffman
 		    		nouveauNoeud->c=j; //caractère initiale: c'est la valeur de j
 		    		nouveauNoeud->occurence=tabCaractere[j]; //valeur tab = nbr occurence
 		    		nouveauNoeud->code=0;
@@ -202,15 +237,36 @@ int main(void)
 
 		    		        //On remplit ArbreHufman avec l'@ de NouveauNoeud
 
-		    		arbreHuffman[0] = &nouveauNoeud;
+		    		arbreHuffman[e] = nouveauNoeud; // à l'index 0 on a l'@ de la structure noeud de 'a'
+		    		e++;
 
 				}
 
-	    }
+			    }
+	    		//affichage tableau d'huffman: tableau de structures
+        printf ("Tab d'Huffman \n\r"); //j'affiche l'index
+	    //_________ Affichage Tableau de huffman _________________
+	    		   for (int k = 0 ; k < 10 ; k++) // on parcourt le tab
+	    			    {
+
+	    			    	printf ("[%d] \n\r", k); //j'affiche l'index
+	    			        printf( "%d\n\r", arbreHuffman[k]);  //j'affiche la valeur d'occurence du caractère correspodnant
+
+	    			   }
+	    		   printf (" case 0 [%c] \n\r", arbreHuffman[0]->c);
+	    		   printf ("case 0: occ %d \n\r", arbreHuffman[0]->occurence);
+	    		   printf ("case 1 [%c] \n\r", arbreHuffman[1]->c);//caractère initiale: c'est la valeur de j
+	    		   printf ("case 1: occ %d \n\r", arbreHuffman[1]->occurence);
+	    		   printf ("case 2 [%c] \n\r", arbreHuffman[2]->c);//caractère initiale: c'est la valeur de j
+	    		   printf ("case 2: occ %d \n\r", arbreHuffman[2]->occurence);
+	    		   printf ("case 3 [%c] \n\r", arbreHuffman[3]->c);//caractère initiale: c'est la valeur de j
+	    		   printf ("case 3: occ %d \n\r", arbreHuffman[3]->occurence);
+	    		   //nouveauNoeud->occurence=tabCaractere[j]; //valeur tab = nbr occurence
+
+	    			   // }
 
 
 
-*/
   while (1)
   {
 
