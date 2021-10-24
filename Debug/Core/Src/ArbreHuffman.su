@@ -1,0 +1,3 @@
+ArbreHuffman.c:3:6:creerFeuille	32	static
+ArbreHuffman.c:25:6:afficherTableauArbreHuffman	24	static
+ArbreHuffman.c:45:6:afficherContenuArbreHuffman	56	static

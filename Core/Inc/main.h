@@ -28,10 +28,20 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+
+//#include "stm32f4xx_hal.h"
+#include "Occurrence.h"
+#include "Struct.h"
+#include "ArbreHuffman.h"
+
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+/*
+
+*/
 
 /* USER CODE END Includes */
 
@@ -73,6 +83,8 @@ void Error_Handler(void);
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+
+#define MAX_ARRAY 256
 
 /* USER CODE END Private defines */
 

@@ -1,0 +1,3 @@
+Occurrence.c:3:10:occurence	24	static
+Occurrence.c:20:9:compterNombreCaracteresDifferents	24	static
+Occurrence.c:34:6:afficherTabCaractere	24	static
