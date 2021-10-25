@@ -1,25 +1,24 @@
 
  /*============================== ESET 2021-2022 ================================
-**File Name   :  ArbreHuffman.h                                                  **
+**File Name   :  ArbreBinaire.h                                                 **
 **Author      :  Benoit GIRAUD                                                  **
 **Created on  :  October, 2021                                                  **
 **------------------------------------------------------------------------------**
-**Description : Header file of ArbreHuffman.c                                    **
+**Description : Header file of ArbreBinaire.c                                   **
 =================================================================================*/
+#ifndef INC_ARBRE_BINAIRE_H_
+#define INC_ARBRE_BINAIRE_H_
 
-
-#ifndef NOEUD_H_INCLUDED
-#define NOEUD_H_INCLUDED
 /*=============================================================================
 **                               Includes                                     **
 ==============================================================================*/
 #include "Struct.h"
+
 /*===============================================================================
 **                            Prototype                                        **
 ===============================================================================*/
+void nouveauNoeud( noeud *arbre[MAX_ARRAY], uint8_t taille );
+void constructionArbreBinaire( noeud *arbre[MAX_ARRAY], uint8_t taille );
+void afficherRacineArbre( noeud *arbre );
 
-void creerFeuille( noeud *arbre[256], uint8_t tab[MAX_ARRAY] );
-void afficherTableauArbreHuffman( noeud *arbre[MAX_ARRAY] );
-void afficherArbreHuffman( noeud *arbre[MAX_ARRAY] );
-
-#endif // NOEUD_H_INCLUDED
+#endif /* INC_ARBRE_BINAIRE_H_ */

@@ -5,8 +5,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/ArbreBinaire.c \
 ../Core/Src/ArbreHuffman.c \
+../Core/Src/CompressionTexte.c \
+../Core/Src/EnteteHuffman.c \
 ../Core/Src/Occurrence.c \
+../Core/Src/ParcoursArbreBinaire.c \
+../Core/Src/TriArbreHuffman.c \
 ../Core/Src/main.c \
 ../Core/Src/stm32f4xx_hal_msp.c \
 ../Core/Src/stm32f4xx_it.c \
@@ -15,8 +20,13 @@ C_SRCS += \
 ../Core/Src/system_stm32f4xx.c 
 
 OBJS += \
+./Core/Src/ArbreBinaire.o \
 ./Core/Src/ArbreHuffman.o \
+./Core/Src/CompressionTexte.o \
+./Core/Src/EnteteHuffman.o \
 ./Core/Src/Occurrence.o \
+./Core/Src/ParcoursArbreBinaire.o \
+./Core/Src/TriArbreHuffman.o \
 ./Core/Src/main.o \
 ./Core/Src/stm32f4xx_hal_msp.o \
 ./Core/Src/stm32f4xx_it.o \
@@ -25,8 +35,13 @@ OBJS += \
 ./Core/Src/system_stm32f4xx.o 
 
 C_DEPS += \
+./Core/Src/ArbreBinaire.d \
 ./Core/Src/ArbreHuffman.d \
+./Core/Src/CompressionTexte.d \
+./Core/Src/EnteteHuffman.d \
 ./Core/Src/Occurrence.d \
+./Core/Src/ParcoursArbreBinaire.d \
+./Core/Src/TriArbreHuffman.d \
 ./Core/Src/main.d \
 ./Core/Src/stm32f4xx_hal_msp.d \
 ./Core/Src/stm32f4xx_it.d \

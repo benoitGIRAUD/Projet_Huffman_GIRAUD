@@ -1,25 +1,23 @@
-
  /*============================== ESET 2021-2022 ================================
-**File Name   :  ArbreHuffman.h                                                  **
+**File Name   :  CompressionTexte.h                                             **
 **Author      :  Benoit GIRAUD                                                  **
 **Created on  :  October, 2021                                                  **
 **------------------------------------------------------------------------------**
-**Description : Header file of ArbreHuffman.c                                    **
+**Description : Header file of CompressionTexte.c                               **
 =================================================================================*/
+#ifndef SRC_COMPRESSION_TEXTE_H_
+#define SRC_COMPRESSION_TEXTE_H_
 
-
-#ifndef NOEUD_H_INCLUDED
-#define NOEUD_H_INCLUDED
 /*=============================================================================
 **                               Includes                                     **
 ==============================================================================*/
 #include "Struct.h"
+
 /*===============================================================================
 **                            Prototype                                        **
 ===============================================================================*/
+noeud *getAdress_recursif(noeud *ptrNoeud, uint8_t caractere, noeud *Adresse);
+uint16_t compresssionTexte(uint8_t *chaine, noeud *ptrNoeud, uint16_t texteCompress[TAILLE]);
+void afficherTexteCompresse(uint16_t texteCompress[TAILLE], int16_t tailleC);
 
-void creerFeuille( noeud *arbre[256], uint8_t tab[MAX_ARRAY] );
-void afficherTableauArbreHuffman( noeud *arbre[MAX_ARRAY] );
-void afficherArbreHuffman( noeud *arbre[MAX_ARRAY] );
-
-#endif // NOEUD_H_INCLUDED
+#endif /* SRC_COMPRESSION_TEXTE_H_ */

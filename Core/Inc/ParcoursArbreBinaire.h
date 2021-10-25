@@ -1,25 +1,24 @@
-
  /*============================== ESET 2021-2022 ================================
-**File Name   :  ArbreHuffman.h                                                  **
+**File Name   :  ParcoursArbreHuffman.h                                         **
 **Author      :  Benoit GIRAUD                                                  **
 **Created on  :  October, 2021                                                  **
 **------------------------------------------------------------------------------**
-**Description : Header file of ArbreHuffman.c                                    **
+**Description : Header file of ParcoursArbreHuffman.c                           **
 =================================================================================*/
 
+#ifndef PARCOURS_ARBRE_H_INCLUDED
+#define PARCOURS_ARBRE_H_INCLUDED
 
-#ifndef NOEUD_H_INCLUDED
-#define NOEUD_H_INCLUDED
 /*=============================================================================
 **                               Includes                                     **
 ==============================================================================*/
 #include "Struct.h"
+
 /*===============================================================================
 **                            Prototype                                        **
 ===============================================================================*/
+void parcourirArbre(noeud *ptrNoeud );
+void afficherFeuilles( noeud *ptrNoeud);
+void creerCode(noeud *ptrNoeud, uint32_t code, uint32_t taille );
 
-void creerFeuille( noeud *arbre[256], uint8_t tab[MAX_ARRAY] );
-void afficherTableauArbreHuffman( noeud *arbre[MAX_ARRAY] );
-void afficherArbreHuffman( noeud *arbre[MAX_ARRAY] );
-
-#endif // NOEUD_H_INCLUDED
+#endif // PARCOURS_ARBRE_H_INCLUDED

@@ -1,25 +1,21 @@
-
  /*============================== ESET 2021-2022 ================================
-**File Name   :  ArbreHuffman.h                                                  **
+**File Name   :  TriArbreHuffman.h                                              **
 **Author      :  Benoit GIRAUD                                                  **
 **Created on  :  October, 2021                                                  **
 **------------------------------------------------------------------------------**
-**Description : Header file of ArbreHuffman.c                                    **
+**Description :                                   **
 =================================================================================*/
+#ifndef TRIARBRE_H_INCLUDED
+#define TRIARBRE_H_INCLUDED
 
-
-#ifndef NOEUD_H_INCLUDED
-#define NOEUD_H_INCLUDED
 /*=============================================================================
 **                               Includes                                     **
 ==============================================================================*/
 #include "Struct.h"
+
 /*===============================================================================
 **                            Prototype                                        **
 ===============================================================================*/
+void triArbreHuffman(noeud *arbre[256], uint32_t taille);
 
-void creerFeuille( noeud *arbre[256], uint8_t tab[MAX_ARRAY] );
-void afficherTableauArbreHuffman( noeud *arbre[MAX_ARRAY] );
-void afficherArbreHuffman( noeud *arbre[MAX_ARRAY] );
-
-#endif // NOEUD_H_INCLUDED
+#endif // TRIARBRE_H_INCLUDED

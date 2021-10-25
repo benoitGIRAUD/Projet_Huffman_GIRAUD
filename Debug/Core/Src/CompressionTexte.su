@@ -1,0 +1,3 @@
+CompressionTexte.c:18:8:getAdress_recursif	24	static
+CompressionTexte.c:38:10:compresssionTexte	48	static
+CompressionTexte.c:68:6:afficherTexteCompresse	24	static

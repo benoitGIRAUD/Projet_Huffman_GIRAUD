@@ -1,0 +1,3 @@
+ParcoursArbreBinaire.c:19:6:parcourirArbre	40	static
+ParcoursArbreBinaire.c:34:6:afficherFeuilles	16	static
+ParcoursArbreBinaire.c:42:6:creerCode	24	static

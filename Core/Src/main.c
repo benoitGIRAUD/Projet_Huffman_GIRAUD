@@ -1,137 +1,92 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+  /*============================== ESET 2019-2020 ================================
+**File Name   :  main.c                                                         **
+**Author      :  Benoit GIRAUD                                                  **
+**Created on  :  Mars, 2020                                                     **
+**------------------------------------------------------------------------------**
+**Description : main of Huffman_F446RE Project                                  **
+================================================================================*/
+
+  /*=============================================================================
+  **                               Includes                                     **
+  ==============================================================================*/
 #include "main.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
+#include "stm32f4xx_hal.h"
 
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart2; //UART
 
-/* USER CODE BEGIN PV */
 
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
+/*===============================================================================
+**                            Prototype                                        **
+===============================================================================*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
 
 int __io_putchar(int ch){
-	HAL_UART_Transmit(&huart2, &ch, 1, 1000);
+	HAL_UART_Transmit(&huart2, &ch, 1, 1000); //Printf sur UART2
 }
 
-//uint8_t  texte[]="A_DEAD_DAD_CEDED_A_BAD_BABE_A_BEADED_ABACA_BED";
-uint8_t  texte[]="aaaabbbccd";  // Une banane
-//uint8_t  texte[]="Two households, both alike in dignity,In fair Verona, where we lay our scene,From ancient grudge break to new mutiny,Where civil blood makes civil hands unclean.From forth the fatal loins of these two foesA pair of star-crossd lovers take their life;Whose misadventured piteous overthrowsDo with their death bury their parents strife.The fearful passage of their death-markd love,And the continuance of their parents rage,Which, but their childrens end, nought could remove,Is now the two hours traffic of our stage;The which if you with patient ears attend,What here shall miss, our toil shall strive to mend.";
+/*==============================================================================
+**                           Global Variables                                 **
+==============================================================================*/
+uint8_t  texte[]="aaaabbbccd";  // Une banane //aaaabbbccd
 
-//uint16_t texteCompress[TAILLE]={0};
-
-uint8_t tabCaractere[256]={0};
+uint8_t tabCaractere[MAX_ARRAY]={0};
 uint16_t nbrCaractereTotal=0;
 uint8_t nbrCaractereDifferent=0;
 
-noeud *arbreHuffman[256];
-//noeud *racine;
+noeud *arbreHuffman[MAX_ARRAY];
+noeud *racine; //Unique ref a la racine de l'arbre
 
-//uint16_t entete[100]={0};
+uint16_t entete[100]={0};
+uint16_t texteCompress[TAILLE]={0};
 
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-  /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+  /* USER CODE BEGIN 3 */
 	printf("--------- Projet Huffman F446RE ---------\r\n\r\n");
 	printf("\r\nSTART\r\n\r\n");
-
+//______ Calcul occurrences ______
 	nbrCaractereTotal= occurence(texte, tabCaractere);
 	nbrCaractereDifferent= compterNombreCaracteresDifferents(tabCaractere);
 	afficherTabCaractere(tabCaractere);
-
+//______ Creation feuilles ______
 	creerFeuille(arbreHuffman,tabCaractere);
 	afficherTableauArbreHuffman(arbreHuffman);
+//___Tri de l'arbre ______
+	triArbreHuffman(arbreHuffman, nbrCaractereDifferent-1);
+	afficherArbreHuffman(arbreHuffman);
+//______ Construction de l'arbre binaire ______
+	constructionArbreBinaire(arbreHuffman, nbrCaractereDifferent-1);
+	afficherRacineArbre(arbreHuffman[0]); //AFFICHE RACINE
+	racine = arbreHuffman[0];
+	afficherFeuilles (racine);
+//______ Creation d'un code Huffman pour chaque carac ______
+	creerCode(racine, 0, 0);
+
+/*
+//______ Compression du texte ______
+	int16_t tailleC = compresssionTexte( texte, racine, texteCompress);
+//______ Creation entete ______
+	creationEntete(entete, tailleC, nbrCaractereTotal, tabCaractere, racine);
+	afficherEntete(entete);
+	afficherTexteCompresse(texteCompress, tailleC);
+*/
+
 
 	printf("\r\nEND\r\n");
-	  while(1)
-	  {
-		  //nothing
-	  }
+
+  while (1)
+  {
+
   }
   /* USER CODE END 3 */
 }
